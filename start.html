@@ -8,94 +8,73 @@
 <style>
 * { box-sizing: border-box; }
 
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-x: hidden;
-}
-
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
   background: #f5f6fa;
-  padding: 0;
 }
 
 .container {
-  width: 100%;
   max-width: 720px;
-  margin: 0 auto; 
+  margin: 0 auto;
   background: white;
   padding: 14px;
 }
 
 h2 {
-  margin: 0 0 20px 0;
-  font-size: 22px;
+  margin-bottom: 20px;
 }
 
 label.main-label {
-  display: block;
   font-weight: bold;
-  margin-bottom: 8px;
 }
 
 select, textarea {
   width: 100%;
   padding: 12px;
-  margin-bottom: 20px;
+  margin: 12px 0 20px;
   border-radius: 8px;
   border: 1px solid #ccc;
 }
 
 .section {
-  margin-bottom: 26px;
+  margin-bottom: 24px;
 }
 
 .section-title-row {
   display: flex;
-  align-items: baseline;
   gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
+  align-items: baseline;
 }
 
 .section-help {
-  font-size: 13px;
+  font-size: 12px;
   color: #666;
-}
-
-.section-title {
-  font-size: 18px;
-  font-weight: bold;
 }
 
 .room-line {
   display: flex;
-  align-items: center;
   gap: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .room-type {
   width: 90px;
   font-weight: bold;
-  font-size: 14px;
 }
 
 .room-options {
   flex: 1;
   display: flex;
   flex-wrap: wrap;
-  gap: 5px 10px;
+  gap: 6px;
 }
 
-.room-options label {
-  display: flex;
-  align-items: center;
-  gap: 3px;
-  white-space: nowrap;
-  font-size: 14px;
+.reason-box {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fafafa;
 }
 
 button {
@@ -103,86 +82,79 @@ button {
   padding: 15px;
   background: black;
   color: white;
-  border: none;
   border-radius: 10px;
+  border: none;
   font-size: 16px;
-}
-
-#donePage {
-  display: none;
-  min-height: 100vh;
-  background: white;
-  padding: 40px 20px;
-  text-align: center;
-}
-
-.done-message {
-  font-size: 22px;
-  font-weight: bold;
-  line-height: 1.7;
-  margin-top: 60px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container" id="formPage">
+<div class="container">
 
-  <h2>출근보고</h2>
+<h2>출근보고</h2>
 
-  <label class="main-label">근로자</label>
-  <select id="worker">
-    <option value="">선택하세요</option>
-    <option>이준희</option>
-    <option>류정수</option>
-    <option>기타</option>
-  </select>
+<label class="main-label">근로자</label>
+<select id="worker">
+  <option value="">선택하세요</option>
+  <option>이준희</option>
+  <option>류정수</option>
+  <option>기타</option>
+</select>
 
-  <div class="section">
-    <div class="section-title">청소객실 (<span id="cleanCount">0</span>)</div>
-    <div id="clean"></div>
+<div class="section">
+  <div class="section-title-row">
+    <div><b>청소객실</b> (<span id="cleanCount">0</span>)</div>
   </div>
-
-  <div class="section">
-    <div class="section-title-row">
-      <div class="section-title">점검객실 (<span id="inspectCount">0</span>)</div>
-      <div class="section-help">- 청소는 아닌데, 비어있는 객실을 점검 -</div>
-    </div>
-    <div id="inspect"></div>
-  </div>
-
-  <div class="section">
-    <div class="section-title-row">
-      <div class="section-title">노쇼</div>
-      <div class="section-help">- 어제 도어락 log 확인해서 안 온 게스트 확인 -</div>
-    </div>
-
-    <select id="noshowSelect" onchange="toggleNoshow()">
-      <option value="" selected>--</option>
-      <option value="없음">없음</option>
-      <option value="전날노쇼">전날노쇼</option>
-      <option value="전전날노쇼">전전날노쇼</option>
-    </select>
-
-    <div id="noshowBox" style="display:none;">
-      <div id="noshow"></div>
-    </div>
-  </div>
-
-  <label class="main-label">특이사항</label>
-  <textarea id="memo"></textarea>
-
-  <button onclick="submitForm()">출근완료</button>
-
+  <div id="clean"></div>
 </div>
 
-<div id="donePage">
-  <div class="done-message">출근 완료</div>
+<div class="section">
+  <div class="section-title-row">
+    <div><b>점검객실</b> (<span id="inspectCount">0</span>)</div>
+    <div class="section-help">- 청소는 아닌데, 비어있는 객실을 점검 -</div>
+  </div>
+  <div id="inspect"></div>
+</div>
+
+<div class="section">
+  <div class="section-title-row">
+    <div><b>노쇼</b></div>
+    <div class="section-help">- 어제 도어락 log 확인해서 안 온 게스트 확인 -</div>
+  </div>
+
+  <select id="noshowSelect">
+    <option value="">--</option>
+    <option>없음</option>
+    <option>전날노쇼</option>
+    <option>전전날노쇼</option>
+  </select>
+</div>
+
+<label class="main-label">특이사항</label>
+<textarea id="memo"></textarea>
+
+<div id="timeReasonSection" style="display:none;">
+  <label class="main-label">출근시간 변동사유</label>
+
+  <div class="reason-box">
+    <label><input type="checkbox" id="reason1"> 사장님 사전보고 완료</label><br>
+    <label><input type="checkbox" id="reason2"> 사장님 특별미션</label><br>
+    <label><input type="checkbox" id="reason3"> 청소 갯수 과다</label><br>
+    <label><input type="checkbox" id="reason4" onchange="toggleEtc()"> 기타 사유</label>
+
+    <textarea id="etcText" style="display:none;" placeholder="기타 사유 입력"></textarea>
+  </div>
+</div>
+
+<button onclick="submitForm()">출근완료</button>
+
 </div>
 
 <script>
-const webhookUrl = "https://hook.us2.make.com/2y9kz1fqhfr2hl84og54aft1lcligjl5";
+
+const webhookUrl = "https://hook.us2.make.com/0uoafwaj0hqxwks97ankcvkxbtuu99fs";
 
 const rooms = {
   "더블": ["R1","R2"],
@@ -208,11 +180,10 @@ function createSection(id) {
 
     rooms[type].forEach(r => {
       const label = document.createElement("label");
-
       const cb = document.createElement("input");
       cb.type = "checkbox";
-      cb.value = r;
       cb.name = id;
+      cb.value = r;
       cb.onchange = updateCount;
 
       label.appendChild(cb);
@@ -228,7 +199,6 @@ function createSection(id) {
 
 createSection("clean");
 createSection("inspect");
-createSection("noshow");
 
 function getChecked(name) {
   return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(e => e.value);
@@ -239,45 +209,73 @@ function updateCount() {
   document.getElementById("inspectCount").innerText = getChecked("inspect").length;
 }
 
-function toggleNoshow() {
-  const val = document.getElementById("noshowSelect").value;
-  const box = document.getElementById("noshowBox");
+function toggleEtc() {
+  document.getElementById("etcText").style.display =
+    document.getElementById("reason4").checked ? "block" : "none";
+}
 
-  if (val === "전날노쇼" || val === "전전날노쇼") {
-    box.style.display = "block";
-  } else {
-    box.style.display = "none";
-  }
+function getDiffMinutes() {
+  const now = new Date();
+  const standard = new Date();
+  standard.setHours(9,0,0);
+  return Math.abs((now - standard) / 60000);
 }
 
 async function submitForm() {
+
   const worker = document.getElementById("worker").value;
   const clean = getChecked("clean");
   const inspect = getChecked("inspect");
-  const noshowMode = document.getElementById("noshowSelect").value;
-  const memo = document.getElementById("memo").value.trim();
+  const noshow = document.getElementById("noshowSelect").value;
+  const memo = document.getElementById("memo").value;
 
   if (!worker) {
-    alert("근로자를 선택하세요.");
+    alert("근로자 선택");
     return;
+  }
+
+  const diff = getDiffMinutes();
+
+  if (diff >= 40) {
+    const section = document.getElementById("timeReasonSection");
+
+    if (section.style.display !== "block") {
+      alert("출근시간 40분 이상 변동. 사유 선택 필요");
+      section.style.display = "block";
+      return;
+    }
+
+    if (!reason1.checked && !reason2.checked && !reason3.checked && !reason4.checked) {
+      alert("사유 선택하세요");
+      return;
+    }
+
+    if (reason4.checked && !etcText.value.trim()) {
+      alert("기타 사유 입력하세요");
+      return;
+    }
   }
 
   const payload = {
     worker,
     clean,
     inspect,
-    noshowMode,
+    noshow,
     memo
   };
 
-  await fetch(webhookUrl, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(payload)
-  });
+  try {
+    await fetch(webhookUrl, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
+    });
 
-  document.getElementById("formPage").style.display = "none";
-  document.getElementById("donePage").style.display = "block";
+    alert("제출완료");
+
+  } catch (e) {
+    alert("전송실패");
+  }
 }
 </script>
 
